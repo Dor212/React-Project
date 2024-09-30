@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { userActions } from "../../Store/UserSlice";
+import { decode } from "../../Services/tokenServices";
+
 
 
 
@@ -29,8 +31,13 @@ const Login = () => {
     const onSubmit = async (form: typeof initialData)=>{
         try {
             const token = await axios.post("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/login", form,);
-            dispatch(userActions.login({userName: "Dor"}));
-            console.log(token);
+            localStorage.setItem("token", token.data);
+            const id = decode(token.data)._id;
+            axios.defaults.headers.common['x-auth-token'] = token.data;
+            const user = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/" + id);
+
+            dispatch(userActions.login({ userName: user.data.name.first }));
+
             toast.success("Login Success");
             nav("/");
         } catch (error) {

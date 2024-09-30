@@ -24,6 +24,9 @@ const Header =()=>{
         <Navbar.Link as={Link} href="/login" to="/login" active={location === "/login" || location ==="/"}className="text-2xl">
           Login
         </Navbar.Link>
+          <Navbar.Link as={Link} href="/profile" to="/profile" active={location === "/profile" || location === "/"} className="text-2xl">
+            Profile
+          </Navbar.Link>
         <Navbar.Brand>
         </Navbar.Brand>
       </Navbar.Collapse>
