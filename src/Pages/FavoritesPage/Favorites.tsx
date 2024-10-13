@@ -1,34 +1,47 @@
+
 import { useSelector } from "react-redux";
-import { TRootState } from "../../Store/BigPie"
+import { TRootState } from "../../Store/BigPie";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { TCard } from "../../Types/TCard";
 import axios from "axios";
+import { TCard } from "../../Types/TCard";
 import { Card } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import Swal from "sweetalert2";
 
-
-const HomePage = ()=>{
-    const user = useSelector((state: TRootState) => state.UserSlice);
+const Favorites = () => {
     const [cards, setCards] = useState<TCard[]>([]);
     const nav = useNavigate();
     const searchWord = useSelector(
         (state: TRootState) => state.SearchSlice.search,
     );
 
-    const getData = async () => {
-        const res = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards");
-        setCards(res.data);
-    }
-
-
     const searchCards = () => {
-        return cards.filter((item: TCard) => item.title.includes(searchWord));
+        return cards.filter((item) => item.likes.includes(user.user!.id))
+            .filter((item: TCard) => item.title.includes(searchWord));
+    };
+
+    const isLikedCard = (card: TCard) => {
+        if (user && user.user) {
+            return card.likes.includes(user.user.id);
+        } else return false;
+    };
+
+    const navToCard = (id: string) => {
+        nav("/card/" + id);
+    };
+
+    const getData = async () => {
+        const res = await axios.get(
+            "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards",
+        );
+        setCards(res.data);
     };
 
     const likeUnlikeCard = async (card: TCard) => {
-        const res = await axios.patch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/" + card._id,);
+        const res = await axios.patch(
+            "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/" + card._id,
+        );
         if (res.status === 200) {
             Swal.fire({
                 position: "top",
@@ -36,6 +49,7 @@ const HomePage = ()=>{
                 showConfirmButton: false,
                 timer: 1500
             });
+
 
             const index = cards.indexOf(card);
             const ifLiked = cards[index].likes.includes(user.user!.id);
@@ -47,27 +61,17 @@ const HomePage = ()=>{
             }
 
             setCards(newCards);
-
         }
     };
-
-    const isLikeCard = (card: TCard) => {
-        if (user && user.user) {
-            return card.likes.includes(user.user?.id);
-        }
-    };
-
-    const navToCard = (id: string) => {
-        nav('/card/' + id)
-    };
-
 
     useEffect(() => {
         getData();
-    }, [])
+    }, []);
+
+    const user = useSelector((state: TRootState) => state.UserSlice);
 
     return (<>
-        <div className="flex flex-col items-center justify-start gap-2 " >
+        <div className="flex flex-col items-center justify-start gap-2" >
             <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Home Page</h1>
             <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">Here you can find cards from all categories</p>
             {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
@@ -91,13 +95,14 @@ const HomePage = ()=>{
                                 <CiHeart
                                     size={30}
                                     className="m-auto cursor-pointer"
-                                    color={isLikeCard(item) ? "red" : "black"}
+                                    color={isLikedCard(item) ? "red" : "black"}
                                     onClick={() => likeUnlikeCard(item)} />)}
                         </div>
                     </Card>
-                )
+                );
             })}
         </div>
     </>)
 };
-export default HomePage;
+
+export default Favorites;

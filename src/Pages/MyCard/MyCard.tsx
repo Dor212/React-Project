@@ -6,10 +6,10 @@ import { TCard } from "../../Types/TCard";
 import axios from "axios";
 import { Card } from "flowbite-react";
 import { CiHeart } from "react-icons/ci";
-import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 
-const HomePage = ()=>{
+const MyCardPage = () => {
     const user = useSelector((state: TRootState) => state.UserSlice);
     const [cards, setCards] = useState<TCard[]>([]);
     const nav = useNavigate();
@@ -28,14 +28,10 @@ const HomePage = ()=>{
     };
 
     const likeUnlikeCard = async (card: TCard) => {
-        const res = await axios.patch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/" + card._id,);
+        axios.defaults.headers.common["x-auth-token"] = localStorage.getItem('token');
+        const res = await axios.patch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/my-cards",);
         if (res.status === 200) {
-            Swal.fire({
-                position: "top",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500
-            });
+            toast.success('Card Like');
 
             const index = cards.indexOf(card);
             const ifLiked = cards[index].likes.includes(user.user!.id);
@@ -68,7 +64,7 @@ const HomePage = ()=>{
 
     return (<>
         <div className="flex flex-col items-center justify-start gap-2 " >
-            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Home Page</h1>
+            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">My Cards</h1>
             <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">Here you can find cards from all categories</p>
             {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
         </div>
@@ -100,4 +96,4 @@ const HomePage = ()=>{
         </div>
     </>)
 };
-export default HomePage;
+export default MyCardPage;

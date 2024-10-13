@@ -1,6 +1,7 @@
 export type TCard = {
   map(arg0: (item: TCard) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
-  "_id": "65422172e443ec28a252c27d",
+  
+  "_id": string,
   "title": string,
   "subtitle": string,
   "description": string,
