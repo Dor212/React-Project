@@ -67,9 +67,13 @@ const HomePage = ()=>{
     }, [])
 
     return (<>
-        <div className="flex flex-col items-center justify-start gap-2 " >
+        <div className="flex flex-col items-center justify-start gap-2 mb-10 " >
             <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Home Page</h1>
-            <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">Here you can find cards from all categories</p>
+            <p className="mt-10 mb-5 font-mono text-2xl text-center text-gray-700 typing-effect dark:text-white ">On this site you can find a wide variety of business cards.
+                <br />
+                If you connect, you can like cards that will be displayed on the Favorites page.
+                <br />
+                Business user? Excellent, mark this in the registration form and you can create a business card for your business..</p>
             {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
         </div>
         <div className="flex flex-row justify-center items-center w-[70vw] flex-wrap m-auto gap-10 mb-5">

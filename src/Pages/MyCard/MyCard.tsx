@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { TCard } from "../../Types/TCard";
 import axios from "axios";
 import { Card } from "flowbite-react";
-import { CiHeart } from "react-icons/ci";
-import { toast } from "react-toastify";
+import { CiHeart, CiTrash, CiEdit, CiCirclePlus } from "react-icons/ci";
+import Swal from "sweetalert2";
+
 
 
 const MyCardPage = () => {
@@ -18,7 +19,8 @@ const MyCardPage = () => {
     );
 
     const getData = async () => {
-        const res = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards");
+        axios.defaults.headers.common["x-auth-token"] = localStorage.getItem("token")
+        const res = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards",);
         setCards(res.data);
     }
 
@@ -28,10 +30,14 @@ const MyCardPage = () => {
     };
 
     const likeUnlikeCard = async (card: TCard) => {
-        axios.defaults.headers.common["x-auth-token"] = localStorage.getItem('token');
-        const res = await axios.patch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/my-cards",);
+        const res = await axios.patch("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/my-cards" + card._id,);
         if (res.status === 200) {
-            toast.success('Card Like');
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            });
 
             const index = cards.indexOf(card);
             const ifLiked = cards[index].likes.includes(user.user!.id);
@@ -41,11 +47,35 @@ const MyCardPage = () => {
             } else {
                 newCards[index].likes.push(user.user!.id);
             }
-
             setCards(newCards);
-
         }
     };
+
+    const deleteCard = async (card: TCard) => {
+        try {
+            const res = await axios.delete('https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/' + card._id);
+            const index = cards.indexOf(card);
+            const newCards = [...cards];
+            newCards.splice(index, 1);
+            setCards(newCards);
+            if (res) {
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        } catch (err) {
+            Swal.fire({
+                position: "top",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+
 
     const isLikeCard = (card: TCard) => {
         if (user && user.user) {
@@ -57,6 +87,10 @@ const MyCardPage = () => {
         nav('/card/' + id)
     };
 
+    const navToCreate = () => {
+        nav('/createCard')
+    };
+
 
     useEffect(() => {
         getData();
@@ -65,9 +99,14 @@ const MyCardPage = () => {
     return (<>
         <div className="flex flex-col items-center justify-start gap-2 " >
             <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">My Cards</h1>
-            <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">Here you can find cards from all categories</p>
+            <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">These are the cards you created:</p>
             {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
         </div>
+
+        <div className="fixed flex p-3 rounded-full cursor-pointer right-10 top-20 bg-slate-500">
+            <CiCirclePlus onClick={navToCreate} size={30} />
+        </div>
+
         <div className="flex flex-row justify-center items-center w-[70vw] flex-wrap m-auto gap-10 mb-5">
             {searchCards()!.map((item: TCard) => {
                 return (
@@ -84,11 +123,19 @@ const MyCardPage = () => {
                             </p>
                             <hr />
                             {user && user.user && (
-                                <CiHeart
-                                    size={30}
-                                    className="m-auto cursor-pointer"
-                                    color={isLikeCard(item) ? "red" : "black"}
-                                    onClick={() => likeUnlikeCard(item)} />)}
+                                <>
+                                    <div className="flex flex-row items-center justify-around mt-3">
+                                        <CiHeart
+                                            size={30}
+                                            className="cursor-pointer"
+                                            color={isLikeCard(item) ? "red" : "black"}
+                                            onClick={() => likeUnlikeCard(item)}
+                                        />
+                                        <CiTrash size={30} className="cursor-pointer" onClick={() => deleteCard(item)} />
+                                        <CiEdit size={30} className="cursor-pointer" />
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </Card>
                 )

@@ -1,21 +1,20 @@
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useForm } from "react-hook-form";
-import RegisterSchema from "../../Validations/RegisterSchema"
-import axios from "axios";
-import { Button, Checkbox, FloatingLabel } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 import Swal from "sweetalert2";
+import { Button, FloatingLabel } from "flowbite-react";
+import { CreateCardSchema } from "../../Validations/CreateCardSchema";
 
-const RegisterPage = () => {
+
+const CreateCardPage = () => {
     const initialData = {
-        name: {
-            first: "",
-            middle: "",
-            last: "",
-        },
+        title: "",
+        subtitle: "",
+        description: "",
         phone: "",
         email: "",
-        password: "",
+        web: "",
         image: {
             url: "",
             alt: "",
@@ -26,15 +25,15 @@ const RegisterPage = () => {
             city: "",
             street: "",
             houseNumber: 0,
-            zip: 0
-        },
-        isBusiness: false
-    };
+            zip: 0,
+        }
+    }
+
     const nav = useNavigate();
     const { register, handleSubmit, formState: { errors, isValid } } = useForm({
         defaultValues: initialData,
         mode: "onChange",
-        resolver: joiResolver(RegisterSchema)
+        resolver: joiResolver(CreateCardSchema)
     })
 
     const onSubmit = async (form: typeof initialData) => {
@@ -51,7 +50,7 @@ const RegisterPage = () => {
                     timer: 1500
                 });
 
-                nav("/login");
+                nav("/profile");
             }
         } catch (err) {
             console.log(err);
@@ -65,45 +64,45 @@ const RegisterPage = () => {
         };
 
     };
-    return <>
+    return (<>
         <div className="w-2/5 m-auto">
-            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Register Page</h1>
+            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Create Card</h1>
             <form onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-4 p-4 mb-20 rounded-lg shadow-lg mt-11 bg-slate-100 dark:bg-gray-800">
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
                     type="text"
                     variant="standard"
-                    label="First Name"
-                    {...register("name.first")}
-                    color={errors.name?.first ? "error" : "success"} />
+                    label="title"
+                    {...register("title")}
+                    color={errors.title ? "error" : "success"} />
                 <span className="text-sm text-red-500">
-                    {errors.name?.first?.message}
+                    {errors.title?.message}
                 </span>
 
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
                     type="text"
                     variant="standard"
-                    label="Middle Name"
-                    {...register("name.middle")}
-                    color={errors.name?.middle ? "error" : "success"} />
+                    label="subtitle"
+                    {...register("subtitle")}
+                    color={errors.subtitle ? "error" : "success"} />
                 <span className="text-sm text-red-500">
-                    {errors.name?.middle?.message}
+                    {errors.subtitle?.message}
                 </span>
 
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
                     type="text"
                     variant="standard"
-                    label="Last Name"
-                    {...register("name.last")}
-                    color={errors.name?.last ? "error" : "success"} />
+                    label="description"
+                    {...register("description")}
+                    color={errors.description ? "error" : "success"} />
                 <span className="text-sm text-red-500">
-                    {errors.name?.last?.message}
+                    {errors.description?.message}
                 </span>
 
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
-                    type="number"
+                    type="text"
                     variant="standard"
-                    label="Phone"
+                    label="phone"
                     {...register("phone")}
                     color={errors.phone ? "error" : "success"} />
                 <span className="text-sm text-red-500">
@@ -111,9 +110,9 @@ const RegisterPage = () => {
                 </span>
 
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
-                    type="email"
-                    variant="outlined"
-                    label="Email"
+                    type="text"
+                    variant="standard"
+                    label="email"
                     {...register("email")}
                     color={errors.email ? "error" : "success"} />
                 <span className="text-sm text-red-500">
@@ -121,17 +120,14 @@ const RegisterPage = () => {
                 </span>
 
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
-                    type="password"
-                    variant="outlined"
-                    label="Password"
-                    {...register("password")}
-                    color={errors.password ? "error" : "success"} />
+                    type="text"
+                    variant="standard"
+                    label="web"
+                    {...register("web")}
+                    color={errors.web ? "error" : "success"} />
                 <span className="text-sm text-red-500">
-                    {errors.password?.message}
+                    {errors.web?.message}
                 </span>
-
-                <label htmlFor="isBusiness" >Is Business</label>
-                <Checkbox {...register("isBusiness")} />
 
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
                     type="text"
@@ -212,12 +208,10 @@ const RegisterPage = () => {
                 <span className="text-sm text-red-500">
                     {errors.address?.zip?.message}
                 </span>
-                <Button type="submit" disabled={!isValid}>SEND</Button>
-
-
+                <Button type="submit" disabled={!isValid}>Add Your Card</Button>
             </form>
         </div>
-    </>
-}
-    ;
-export default RegisterPage;
+    </>)
+
+};
+export default CreateCardPage;

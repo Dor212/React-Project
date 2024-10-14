@@ -11,6 +11,7 @@ import CardDetails from "./Pages/CardDetails/CardDetails";
 import Favorites from "./Pages/FavoritesPage/Favorites";
 import MyCardPage from "./Pages/MyCard/MyCard";
 import LoginPage from "./Pages/LoginPage/LoginPage";
+import CreateCardPage from "./Pages/CreateCardPage/CreateCardPage";
 
 function App() {
   const user = useSelector((state: TRootState) => state.UserSlice.user)
@@ -24,6 +25,7 @@ function App() {
         <Route path="/card/:id" element={<CardDetails />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/profile" element={<RoutGuard user={user!}> <Profile /> </RoutGuard>} />
+        <Route path="/createCard" element={<RoutGuard user={user!}> <CreateCardPage /> </RoutGuard>} />
         <Route path="/favorites" element={<RoutGuard user={user!}> <Favorites /> </RoutGuard>} />
         <Route path="/myCard" element={<RoutGuard user={user!}> <MyCardPage /> </RoutGuard>} />
         <Route path="/login" element={<LoginPage />} />

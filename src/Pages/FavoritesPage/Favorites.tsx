@@ -49,13 +49,11 @@ const Favorites = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-
-
             const index = cards.indexOf(card);
             const ifLiked = cards[index].likes.includes(user.user!.id);
             const newCards = [...cards];
             if (ifLiked) {
-                newCards[index].likes.splice(index);
+                newCards[index].likes.splice(index, 1);
             } else {
                 newCards[index].likes.push(user.user!.id);
             }
@@ -72,8 +70,8 @@ const Favorites = () => {
 
     return (<>
         <div className="flex flex-col items-center justify-start gap-2" >
-            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Home Page</h1>
-            <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">Here you can find cards from all categories</p>
+            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Favorites</h1>
+            <p className="mt-10 mb-5 font-mono text-3xl text-center text-gray-700 dark:text-white ">Here are your favorite cards</p>
             {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
         </div>
         <div className="flex flex-row justify-center items-center w-[70vw] flex-wrap m-auto gap-10 mb-5">
