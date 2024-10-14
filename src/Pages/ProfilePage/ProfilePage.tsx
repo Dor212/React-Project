@@ -1,5 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
-/* eslint-disable tailwindcss/classnames-order */
 import { useSelector } from "react-redux";
 import { TRootState } from "../../Store/BigPie";
 

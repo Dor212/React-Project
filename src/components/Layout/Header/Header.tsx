@@ -36,6 +36,9 @@ const Header = () => {
         <Navbar.Link as={Link} href="/home" to="/home" active={location === "/home" || location === "/"} className="text-2xl">
           Home
         </Navbar.Link>
+        <Navbar.Link as={Link} href="/about" to="/about" active={location === "/about" || location === "/"} className="text-2xl">
+          About
+        </Navbar.Link>
         {!user && <Navbar.Link as={Link} href="/register" to="/register" active={location === "/register" || location === "/"} className="text-2xl">
           Register
         </Navbar.Link>}

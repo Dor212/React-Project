@@ -74,7 +74,7 @@ const HomePage = ()=>{
                 If you connect, you can like cards that will be displayed on the Favorites page.
                 <br />
                 Business user? Excellent, mark this in the registration form and you can create a business card for your business..</p>
-            {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
+            {user.isLoggedIn && <p className="mt-10 mb-5 font-mono text-2xl text-center text-gray-700 dark:text-white">Welcome {user?.user?.name.first + " " + user.user?.name.last}</p>}
         </div>
         <div className="flex flex-row justify-center items-center w-[70vw] flex-wrap m-auto gap-10 mb-5">
             {searchCards()!.map((item: TCard) => {

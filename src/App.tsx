@@ -12,6 +12,7 @@ import Favorites from "./Pages/FavoritesPage/Favorites";
 import MyCardPage from "./Pages/MyCard/MyCard";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import CreateCardPage from "./Pages/CreateCardPage/CreateCardPage";
+import AboutPage from "./Pages/AboutPage/AboutPage";
 
 function App() {
   const user = useSelector((state: TRootState) => state.UserSlice.user)
@@ -22,6 +23,7 @@ function App() {
     <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/card/:id" element={<CardDetails />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/profile" element={<RoutGuard user={user!}> <Profile /> </RoutGuard>} />
