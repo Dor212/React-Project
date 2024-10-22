@@ -1,5 +1,5 @@
 export type TUser = {
-        id: string;
+        "_id": string;
         "name": {
                 "first": string,
                 "middle": string,

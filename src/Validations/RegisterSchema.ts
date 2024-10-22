@@ -1,5 +1,6 @@
 import Joi from "joi";
-export const RegisterSchema = Joi.object({
+
+const RegisterSchema = Joi.object({
     name: Joi.object()
       .keys({
         first: Joi.string().min(2).max(256).required(),

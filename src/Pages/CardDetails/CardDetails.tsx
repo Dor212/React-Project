@@ -7,13 +7,15 @@ import { TCard } from "../../Types/TCard";
 const CardDetails = () => {
     const [card, setCard] = useState<TCard>();
     const { id } = useParams<{ id: string }>();
+    const { VITE_GOOGLE_MAPS_API_KEY: Key } = import.meta.env;
+    console.log(Key);
+
 
     const getData = async () => {
         const res = await axios.get('https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/' + id,);
         setCard(res.data);
     }
 
-    const mapUrl = card ? `https://www.google.com/maps/embed/v1/=${encodeURIComponent(card.address.street + " " + card.address.houseNumber + ", " + card.address.city + ", " + card.address.country)}` : "";
 
 
     useEffect(() => {
@@ -30,18 +32,18 @@ const CardDetails = () => {
                 <p className="text-blue-500 cursor-pointer md:text-black hover:text-blue-500">Email: {card && card!.email!}</p>
                 <p className="text-blue-500 cursor-pointer md:text-black hover:text-blue-500">Phone: {card && card!.phone!}</p>
                 <p className="text-blue-500 cursor-pointer md:text-black hover:text-blue-500">Website: {card && card!.web!}</p>
-                <p className=" md:text-black">Address: {card && card!.address.country!}, {card && card!.address.city!}, {card && card!.address.street!}, {card && card!.address.houseNumber!} </p>
-                <div id="GoogleMap">
-                    <iframe
-                        title="Google Map"
-                        width="100%"
-                        height="100%"
-                        frameBorder="0"
-                        style={{ border: 0 }}
-                        src={mapUrl}
+                <p className=" md:text-black">Address: {card && card!.address.country!}, {card && card!.address.city!}, {card && card!.address.street!}, {card && card!.address.houseNumber!} </p> 
+                <div className="size-[30vw]">
+                    {Key && <iframe
+                        className="size-full"
+                        referrerPolicy="no-referrer-when-downgrade"
                         allowFullScreen
-                    ></iframe>
-
+                        loading="lazy"
+                        src={`
+                    https://www.google.com/maps/embed/v1/place?key=${Key}
+                    &q=${card?.address.street}+${card?.address.city}+${card?.address.state}
+                  `}
+                    />}
                 </div>
             </div>
         </div>

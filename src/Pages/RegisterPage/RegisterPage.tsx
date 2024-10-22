@@ -66,8 +66,9 @@ const RegisterPage = () => {
 
     };
     return <>
-        <div className="w-2/5 m-auto">
-            <h1 className="mt-10 mb-5 font-mono text-5xl text-center text-gray-700 dark:text-white">Register Page</h1>
+        <div className="flex flex-col items-center justify-start min-h-screen gap-4 py-10 bg-gray-200 dark:bg-gray-800">
+            <div className="w-2/5 p-6 m-auto bg-white rounded-lg shadow-lg dark:bg-gray-900">
+                <h1 className="mb-6 font-mono text-5xl text-center text-gray-800 dark:text-white">Register Page</h1>
             <form onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-4 p-4 mb-20 rounded-lg shadow-lg mt-11 bg-slate-100 dark:bg-gray-800">
                 <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
@@ -216,6 +217,7 @@ const RegisterPage = () => {
 
 
             </form>
+        </div>
         </div>
     </>
 }

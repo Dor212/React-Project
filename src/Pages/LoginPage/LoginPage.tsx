@@ -32,6 +32,7 @@ const LoginPage = () => {
             const id = decode(token.data)._id;
             axios.defaults.headers.common['x-auth-token'] = token.data;
             const user = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/" + id);
+            console.log("kkdkdkdk");
 
             dispatch(userActions.login(user.data));
 
@@ -56,33 +57,38 @@ const LoginPage = () => {
 
         }
     }
-    return(
-        <form onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col w-1/5 gap-4 p-4 m-auto mt-20 mb-20 rounded-lg shadow-lg bg-slate-100 dark:bg-gray-800"
-        >
-            <h1 className="text-2xl font-bold text-gray-800">Login</h1>
-            <FloatingLabel
-                type="email"
-                label="Email"
-                variant="outlined"
-                {...register("email")}
-                color={errors.email ? "error" : "success"}
-            />
-            <span className="text-sm text-red-600">{errors.email?.message}</span>
+    return (
+        <div className="flex flex-col items-center justify-start min-h-screen gap-4 py-10 bg-gray-200 dark:bg-gray-800">
+            <div className="w-1/3 p-6 m-auto bg-white rounded-lg shadow-lg dark:bg-gray-900">
+                <h1 className="mb-6 font-mono text-5xl text-center text-gray-800 dark:text-white">
+                    Login
+                </h1>
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                    <FloatingLabel
+                        type="email"
+                        label="Email"
+                        variant="standard"
+                        {...register("email")}
+                        color={errors.email ? "error" : "success"}
+                        className="text-xl text-gray-700 dark:text-white"
+                    />
+                    <span className="text-sm text-red-500">{errors.email?.message}</span>
 
-            <FloatingLabel
-                type="password"
-                label="Password"
-                variant="outlined"
-                {...register("password")}
-                color={errors.email ? "error" : "success"}
-            />
-            <span className="text-sm text-red-600">{errors.password?.message}</span>
+                    <FloatingLabel
+                        type="password"
+                        label="Password"
+                        variant="standard"
+                        {...register("password")}
+                        color={errors.password ? "error" : "success"}
+                        className="text-xl text-gray-700 dark:text-white"
+                    />
+                    <span className="text-sm text-red-500">{errors.password?.message}</span>
 
-            <Button type="submit" disabled={!isValid}>Login</Button>
+                    <Button type="submit" disabled={!isValid}>Login</Button>
+                </form>
+            </div>
+        </div>
+    );
+};
 
-
-        </form>
-    )
-}
 export default LoginPage;
