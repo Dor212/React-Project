@@ -41,9 +41,13 @@ const Header = () => {
         {user && <Navbar.Link as={Link} href="/favorites" to="/favorites" active={location === "/favoriets" || location === "/"} className="text-2xl">
           Favorites
         </Navbar.Link>}
-        {user?.isBusiness && <Navbar.Link as={Link} href="/favorites" to="/myCard" active={location === "/myCard" || location === "/"} className="text-2xl">
+        {user?.isBusiness && <Navbar.Link as={Link} href="/myCard" to="/myCard" active={location === "/myCard" || location === "/"} className="text-2xl">
           My Card
-        </Navbar.Link>}<Navbar.Link as={Link} href="/about" to="/about" active={location === "/about" || location === "/"} className="text-2xl">
+        </Navbar.Link>}
+        {user?.isBusiness && <Navbar.Link as={Link} href="/updateUser" to="/updateUser" active={location === "/updateUser" || location === "/"} className="text-2xl">
+          Porfile
+        </Navbar.Link>}
+        <Navbar.Link as={Link} href="/about" to="/about" active={location === "/about" || location === "/"} className="text-2xl">
           About
         </Navbar.Link>
         {user && <Navbar.Link className="text-2xl" onClick={logout}>

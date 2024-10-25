@@ -32,7 +32,6 @@ const LoginPage = () => {
             const id = decode(token.data)._id;
             axios.defaults.headers.common['x-auth-token'] = token.data;
             const user = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/" + id);
-            console.log("kkdkdkdk");
 
             dispatch(userActions.login(user.data));
 
@@ -59,7 +58,7 @@ const LoginPage = () => {
     }
     return (
         <div className="flex flex-col items-center justify-start min-h-screen gap-4 py-10 bg-gray-200 dark:bg-gray-800">
-            <div className="w-1/3 p-6 m-auto bg-white rounded-lg shadow-lg dark:bg-gray-900">
+            <div className="w-full max-w-sm p-6 m-auto bg-white rounded-lg shadow-lg dark:bg-gray-900">
                 <h1 className="mb-6 font-mono text-5xl text-center text-gray-800 dark:text-white">
                     Login
                 </h1>

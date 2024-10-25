@@ -68,7 +68,6 @@ const HomePage = () => {
 
     return (
         <>
-            {/* Hero Section */}
             <div className="flex flex-col items-center justify-start gap-2 py-10 mb-10 bg-gradient-to-r from-blue-200 via-white to-gray-100 dark:bg-gradient-to-r dark:from-gray-700 dark:via-gray-900">
                 <h1 className="mb-4 font-mono text-5xl text-center text-gray-800 dark:text-white dark:to-black">
                     Welcome to the Business Card Hub

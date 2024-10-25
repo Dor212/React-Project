@@ -6,7 +6,6 @@ import axios from "axios";
 import { FloatingLabel, Button } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-
 import Swal from "sweetalert2";
 import { CreateCardSchema } from "../../Validations/CreateCardSchema";
 
@@ -14,6 +13,7 @@ const UpdateCardDetails = () => {
 
     const [card, setCard] = useState<TCard>();
     const { id } = useParams<{ id: string }>();
+
 
     const nav = useNavigate();
 

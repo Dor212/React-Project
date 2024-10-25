@@ -73,7 +73,7 @@ const CreateCardPage = () => {
                 </p>
             </div>
 
-            <div className="w-2/5 m-auto mb-20">
+            <div className="w-full m-auto mb-20 sm:w-4/5 lg:w-3/5 xl:w-2/5">
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 p-4 rounded-lg shadow-lg bg-slate-100 dark:bg-gray-800">
                     <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
                         type="text"

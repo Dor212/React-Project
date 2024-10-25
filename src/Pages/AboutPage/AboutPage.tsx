@@ -1,7 +1,7 @@
 const AboutPage = () => {
     return (
         <div className="flex flex-col items-center justify-start min-h-screen gap-2 py-10 mb-10 bg-gradient-to-r from-blue-200 via-white to-gray-100 dark:bg-gradient-to-r dark:from-gray-800 dark:via-gray-900 dark:to-black dark:text-white">
-            <div className="w-2/5 m-auto">
+            <div className="w-full m-auto sm:w-4/5 lg:w-3/5 xl:w-2/5">
                 <h1 className="mt-5 mb-10 font-mono text-5xl text-center text-gray-800 dark:text-white">
                     About The Project
                 </h1>
