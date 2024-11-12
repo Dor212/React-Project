@@ -91,7 +91,7 @@ const CreateCardPage = () => {
                         color={errors.subtitle ? "error" : "success"} />
                     <span className="text-sm text-red-500">{errors.subtitle?.message}</span>
 
-                    <FloatingLabel className="text-2xl text-gray-700 dark:text-white"
+                    <FloatingLabel className="mt-1 text-2xl text-gray-700 dark:text-white"
                         type="text"
                         variant="standard"
                         label="Description"
