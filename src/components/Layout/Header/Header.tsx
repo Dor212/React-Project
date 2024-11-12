@@ -5,6 +5,9 @@ import { TRootState } from "../../../Store/BigPie";
 import { userActions } from "../../../Store/UserSlice";
 import { CiSearch } from "react-icons/ci";
 import { searchAction } from "../../../Store/SearchSlice";
+import { decode } from "../../../Services/tokenServices";
+import axios from "axios";
+import { useEffect } from "react";
 
 
 
@@ -13,6 +16,16 @@ const Header = () => {
   const location = useLocation().pathname;
   const dispatch = useDispatch();
   const nav = useNavigate();
+
+
+  const login = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    const id = decode(token)._id;
+    axios.defaults.headers.common['x-auth-token'] = token;
+    const user = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/" + id);
+    dispatch(userActions.login(user.data));
+  }
 
   const logout = () => {
     dispatch(userActions.logout());
@@ -23,6 +36,10 @@ const Header = () => {
     const value = e.target.value;
     dispatch(searchAction.searchWord(value));
   }
+
+  useEffect(() => {
+    login();
+  })
 
   return (
     <Navbar fluid rounded className="dark:bg-gray-800">

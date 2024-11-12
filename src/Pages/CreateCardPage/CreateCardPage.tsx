@@ -48,7 +48,7 @@ const CreateCardPage = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                nav("/profile");
+                nav("/myCard");
             }
         } catch (err) {
             console.log(err);
