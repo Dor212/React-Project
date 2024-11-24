@@ -5,50 +5,41 @@ import { TRootState } from "../../../Store/BigPie";
 import { userActions } from "../../../Store/UserSlice";
 import { CiSearch } from "react-icons/ci";
 import { searchAction } from "../../../Store/SearchSlice";
-import { decode } from "../../../Services/tokenServices";
-import axios from "axios";
-import { useEffect } from "react";
+import { useState } from "react";
 
 
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state: TRootState) => state.UserSlice.user);
   const location = useLocation().pathname;
   const dispatch = useDispatch();
   const nav = useNavigate();
 
 
-  const login = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-    const id = decode(token)._id;
-    axios.defaults.headers.common['x-auth-token'] = token;
-    const user = await axios.get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/" + id);
-    dispatch(userActions.login(user.data));
-  }
-
   const logout = () => {
     dispatch(userActions.logout());
-    nav("/")
+    nav("/") 
   }
+
+  const toggleNavbar = () => {
+    setIsOpen(prev => !prev);
+  };
+
 
   const search = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     dispatch(searchAction.searchWord(value));
-  }
-
-  useEffect(() => {
-    login();
-  })
+  };
 
   return (
     <Navbar fluid rounded className="dark:bg-gray-800">
       <Navbar.Brand as={Link} href="https://flowbite-react.com" to="/home">
         <span className="self-center text-4xl font-semibold dark:text-white "><span className="text-sky-400">//</span>REFAEL</span>
       </Navbar.Brand>
-      <Navbar.Toggle />
+      <Navbar.Toggle onClick={toggleNavbar} />
       <TextInput rightIcon={CiSearch} onChange={search} />
-      <Navbar.Collapse>
+      <Navbar.Collapse className={`flex flex-col items-center md:flex-row space-x-4 ${isOpen ? 'block' : 'hidden'}`}>
         {!user && <Navbar.Link as={Link} href="/register" to="/register" active={location === "/register" || location === "/"} className="text-2xl">
           Register
         </Navbar.Link>}
@@ -67,7 +58,7 @@ const Header = () => {
         <Navbar.Link as={Link} href="/about" to="/about" active={location === "/about" || location === "/"} className="text-2xl">
           About
         </Navbar.Link>
-        {user && <Navbar.Link className="text-2xl" onClick={logout}>
+        {user && <Navbar.Link as={Link} className="text-2xl" onClick={logout}>
           Logout
         </Navbar.Link>}
         <DarkThemeToggle />

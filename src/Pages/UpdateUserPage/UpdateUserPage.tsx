@@ -13,7 +13,6 @@ const UpdateUserDetails = () => {
 
     const [user, setUser] = useState<TUser>();
     const { id } = useParams<{ id: string }>();
-    console.log(id);
     const nav = useNavigate();
 
     const getUserData = async () => {

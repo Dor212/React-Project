@@ -69,7 +69,7 @@ const LoginPage = () => {
                         variant="standard"
                         {...register("email")}
                         color={errors.email ? "error" : "success"}
-                        className="text-xl text-gray-700  dark:text-white"
+                        className="text-xl text-gray-700 dark:text-white"
                     />
                     <span className="text-sm text-red-500">{errors.email?.message}</span>
 
